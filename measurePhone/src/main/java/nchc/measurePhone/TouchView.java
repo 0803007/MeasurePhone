@@ -9,6 +9,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.DrawFilter;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -482,6 +483,7 @@ public class TouchView extends ImageView {
     	if (isTouchOne){
     		drawTouchRect(canvas);
             drawTouchRect2(canvas);
+			drawTouchRect3(canvas);
     		drawInterpPT(mInterpPTLeft, mInterpPTRight, canvas);
     		drawNode(vecSemiAutoNodePoint, canvas);
     		//drawBoundary(vecSemiAutoBounUpPoint,vecSemiAutoBounDownPoint,canvas);
@@ -617,6 +619,28 @@ public class TouchView extends ImageView {
         if (dst[2] > 7 && dst[3] > 7)
             canvas.drawRect(dst[2]-7, dst[3]-7, dst[2]+7, dst[3]+7, paint);
     }
+	public void drawTouchRect3(Canvas canvas) {
+		if (nWhichPoint != 0)
+			return;
+
+		//設置畫筆
+		paint = new Paint();
+		paint.setStrokeWidth(3);//筆寬5圖元
+		paint.setStyle(Paint.Style.STROKE);//空心
+		paint.setColor(Color.GREEN);//設置為紅筆
+		paint.setAntiAlias(true);//鋸齒不顯示
+		paint.setPathEffect(new DashPathEffect(new float[] { 10,10 }, 0));
+		//座標轉換
+		Matrix mtrx = this.getImageMatrix();
+		float[] pts = new float[]{crackstart_x, crackstart_y, crackend_x, crackend_y};
+		float[] dst = new float[] {0, 0, 0, 0};
+		mtrx.mapPoints(dst, pts);
+		//畫上框
+		if (crackend_x!=0 || crackend_y!=0)  //End點等於0時不畫
+			canvas.drawLine(dst[0], dst[1], dst[2], dst[3], paint);
+
+
+	}
 	public void drawInterpPT(PointF left,PointF right, Canvas canvas) {
 		//設置畫筆
 		paint = new Paint();
