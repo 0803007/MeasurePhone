@@ -210,16 +210,21 @@ public class TouchView extends ImageView {
 			            	}
 			            	else
 			            	{
-
                                 switch (nWhichPoint) {
                                 case 0:
                                     crackstart_x = (int)pts[0];
                                     crackstart_y = (int)pts[1];
+									crackmiddle_x = 0;
+									crackmiddle_y = 0;
+									crackend_x = 0;
+									crackend_y = 0;
                                     nWhichPoint++;
 									break;
                                 case 1:
                                     crackmiddle_x = (int)pts[0];
                                     crackmiddle_y = (int)pts[1];
+									crackend_x = 0;
+									crackend_y = 0;
                                     nWhichPoint++;
 									break;
                                 case 2:

@@ -2462,9 +2462,8 @@ public class ImageShowActivity extends Activity{
 			tmp_aAngle = 0;
 			tmp_bAngle = 0;
 			for (int i=0;i<31;i++)
-			{
 			    getAngle();
-			}
+
 			count1 = 0;
 
 			//取得Alpha與Beta的差
