@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -96,7 +96,7 @@ import android.widget.Toast;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import nchc.crackphone.SemiAutoExtraction;
+import nchc.measurePhone.SemiAutoExtraction;
 
 public class ImageShowActivity extends Activity{
 	private static final int

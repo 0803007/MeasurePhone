@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import java.util.Calendar;
 

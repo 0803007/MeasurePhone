@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -60,6 +60,8 @@ public class TouchView extends ImageView {
     Vibrator vibrator;
     public float crackstart_x = 0;
     public float crackstart_y = 0;
+    public float crackmiddle_x = 0;
+    public float crackmiddle_y = 0;
     public float crackend_x = 0;
     public float crackend_y = 0;
 	public float mLastMotionX = 0f;
@@ -73,7 +75,8 @@ public class TouchView extends ImageView {
 	private long eventTime = 0;*/
     boolean isLongClickModule = false;
     boolean isTouchOne = false;
-    boolean isStartPoint = true;
+	boolean isStartPoint = false;
+    int nWhichPoint = 0;
     
     //裂縫的結果
 	public PointF mInterpPTLeft = new PointF(0.0f,0.0f);
@@ -207,7 +210,27 @@ public class TouchView extends ImageView {
 			            	}
 			            	else
 			            	{
-			            		if (isStartPoint){	
+
+                                switch (nWhichPoint) {
+                                case 0:
+                                    crackstart_x = (int)pts[0];
+                                    crackstart_y = (int)pts[1];
+                                    nWhichPoint++;
+									break;
+                                case 1:
+                                    crackmiddle_x = (int)pts[0];
+                                    crackmiddle_y = (int)pts[1];
+                                    nWhichPoint++;
+									break;
+                                case 2:
+                                    crackend_x = (int)pts[0];
+                                    crackend_y = (int)pts[1];
+                                    nWhichPoint = 0;
+									break;
+                                }
+
+								/*
+                                if (isStartPoint){
 			            			crackstart_x = (int)pts[0];
 			            			crackstart_y = (int)pts[1];
 
@@ -218,7 +241,7 @@ public class TouchView extends ImageView {
 			            			crackend_y = (int)pts[1];
 
 			            			isStartPoint = true;
-			            		}
+			            		}*/
 			            	}
 			            	postInvalidate();
 			            	isTouchOne = true;
@@ -453,6 +476,7 @@ public class TouchView extends ImageView {
     	
     	if (isTouchOne){
     		drawTouchRect(canvas);
+            drawTouchRect2(canvas);
     		drawInterpPT(mInterpPTLeft, mInterpPTRight, canvas);
     		drawNode(vecSemiAutoNodePoint, canvas);
     		//drawBoundary(vecSemiAutoBounUpPoint,vecSemiAutoBounDownPoint,canvas);
@@ -552,11 +576,11 @@ public class TouchView extends ImageView {
 		paint.setAntiAlias(true);//鋸齒不顯示
         //座標轉換
 		Matrix mtrx = this.getImageMatrix(); 
-		float[] pts = new float[]{crackstart_x, crackstart_y, crackend_x, crackend_y};
+		float[] pts = new float[]{crackstart_x, crackstart_y, crackmiddle_x, crackmiddle_y};
 		float[] dst = new float[] {0, 0, 0, 0};
 		mtrx.mapPoints(dst, pts);
 		//畫上框
-		if (crackend_x!=0 || crackend_y!=0)  //End點等於0時不畫
+		if (crackmiddle_y!=0 || crackmiddle_y!=0)  //End點等於0時不畫
 			canvas.drawLine(dst[0], dst[1], dst[2], dst[3], paint);
 
 		if (dst[0] > 7 && dst[1] > 7)
@@ -564,7 +588,30 @@ public class TouchView extends ImageView {
 
 		if (dst[2] > 7 && dst[3] > 7)
 			canvas.drawRect(dst[2]-7, dst[3]-7, dst[2]+7, dst[3]+7, paint);
+
 	}
+    public void drawTouchRect2(Canvas canvas) {
+        //設置畫筆
+        paint = new Paint();
+        paint.setStrokeWidth(5);//筆寬5圖元
+        paint.setStyle(Paint.Style.STROKE);//空心
+        paint.setColor(Color.RED);//設置為紅筆
+        paint.setAntiAlias(true);//鋸齒不顯示
+        //座標轉換
+        Matrix mtrx = this.getImageMatrix();
+        float[] pts = new float[]{crackmiddle_x, crackmiddle_y, crackend_x, crackend_y};
+        float[] dst = new float[] {0, 0, 0, 0};
+        mtrx.mapPoints(dst, pts);
+        //畫上框
+        if (crackend_x!=0 || crackend_y!=0)  //End點等於0時不畫
+            canvas.drawLine(dst[0], dst[1], dst[2], dst[3], paint);
+
+        if (dst[0] > 7 && dst[1] > 7)
+            canvas.drawRect(dst[0]-7, dst[1]-7, dst[0]+7, dst[1]+7, paint);
+
+        if (dst[2] > 7 && dst[3] > 7)
+            canvas.drawRect(dst[2]-7, dst[3]-7, dst[2]+7, dst[3]+7, paint);
+    }
 	public void drawInterpPT(PointF left,PointF right, Canvas canvas) {
 		//設置畫筆
 		paint = new Paint();

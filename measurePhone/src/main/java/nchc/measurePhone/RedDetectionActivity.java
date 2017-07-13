@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import android.app.Activity;
 import android.os.Bundle;

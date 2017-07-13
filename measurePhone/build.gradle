@@ -7,7 +7,7 @@ android {
     compileOptions.encoding = "BIG5"
 
     defaultConfig {
-        applicationId "nchc.crackphone"
+        applicationId "nchc.measurePhone"
         minSdkVersion 16
         targetSdkVersion 17
     }

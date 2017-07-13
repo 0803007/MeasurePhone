@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc; 

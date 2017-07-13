@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -80,7 +80,8 @@ import android.widget.TextView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import nchc.crackphone.SemiAutoExtraction;
+import nchc.measurePhone.SemiAutoExtraction;
+import nchc.measurePhone.TouchView;
 
 
 public class CopyOfImageShowActivity extends Activity implements SensorEventListener {

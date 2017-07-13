@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <nchc.crackphone.TouchView
+        <nchc.measurePhone.TouchView
             android:id="@+id/touchView1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

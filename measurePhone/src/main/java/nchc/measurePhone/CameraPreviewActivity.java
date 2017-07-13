@@ -1,4 +1,4 @@
-package nchc.measurephone;
+package nchc.measurePhone;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -40,8 +40,8 @@ public class CameraPreviewActivity extends Activity implements SurfaceHolder.Cal
   // TODO Auto-generated method stub
    
   if(previewing){
-   myCamera.stopPreview();
-   previewing = false;
+    myCamera.stopPreview();
+    previewing = false;
   }
    
    
