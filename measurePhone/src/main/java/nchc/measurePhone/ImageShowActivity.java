@@ -2361,8 +2361,8 @@ public class ImageShowActivity extends Activity{
 		menu.add(0, MENU_GET_A4_CORNER, 0, "A4紙偵測");
 		menu.add(0, MENU_GET_DLTIMG, 0, "進行影像校正");
 		//menu.add(,MENU_DIVIDE_LINE, 0, "--------------------------");
-		menu.add(0, MENU_SEMIAUTO, 0, "量測裂縫資料");
-		menu.add(0, MENU_PROFILE, 0, "量測單點裂縫");
+		//menu.add(0, MENU_SEMIAUTO, 0, "量測裂縫資料");
+		menu.add(0, MENU_PROFILE, 0, "量測資訊");
 
 		//menu.add(0, MENU_OPENCLOSE_SENSOR, 0, "Open/Close Sensor");
 		//menu.add(0, MENU_INIT_AB, 0, "Get InitAlphaBeta");
@@ -2587,16 +2587,26 @@ public class ImageShowActivity extends Activity{
 			//mLogText.setText("DLT");
 			break;
 		case MENU_PROFILE:
-			/*
-			bitmap = ((BitmapDrawable) iv.getDrawable()).getBitmap();   
-			int  colorValue = bitmap.getPixel((int)iv.crackstart_x, (int)iv.crackend_y); 
-			int r = Color.red(colorValue);
-			int g = Color.green(colorValue);
-			int b = Color.blue(colorValue);
-			String str = r + "," + g + "," + b;
-			mText.setText(str);
-			//mText.setText("裂縫好長............");*/
-			lineCalculate2();
+			if (iv.crackstart_x==0 && iv.crackstart_y==0 && iv.crackmiddle_x==0 && iv.crackmiddle_y==0 && iv.crackend_x==0 && iv.crackend_y==0 )
+			{
+				Toast.makeText(this, "無點選三點!!!!", Toast.LENGTH_SHORT).show();
+				break;
+			}
+			//長度計算
+			double a = Math.sqrt((iv.crackstart_x-iv.crackmiddle_x)*(iv.crackstart_x-iv.crackmiddle_x) + (iv.crackstart_y-iv.crackmiddle_y)*(iv.crackstart_y-iv.crackmiddle_y));
+			double b = Math.sqrt((iv.crackmiddle_x-iv.crackend_x)*(iv.crackmiddle_x-iv.crackend_x) + (iv.crackmiddle_y-iv.crackend_y)*(iv.crackmiddle_y-iv.crackend_y));
+			double c = Math.sqrt((iv.crackstart_x-iv.crackend_x)*(iv.crackstart_x-iv.crackend_x) + (iv.crackstart_y-iv.crackend_y)*(iv.crackstart_y-iv.crackend_y));
+			double d = Math.acos((a*a+b*b-c*c)/(2*a*b)) * 180 / 3.1415;
+
+			//長度計算
+			double length = Math.sqrt((iv.crackstart_x-iv.crackend_x)*(iv.crackstart_x-iv.crackend_x) + (iv.crackstart_y-iv.crackend_y)*(iv.crackstart_y-iv.crackend_y)); // the same with c
+			//扣除掉微小震動 - 1pixel
+			//len_crack = len_crack -1;
+			//傳送長度
+			DecimalFormat df_ = new DecimalFormat("#.##");
+			String str_ = "寬度 = " +  df_.format(length / mScale) + "mm , 角度 = " +  df_.format(d)  ;
+			mLogText.setText(str_);
+
             iv.invalidate();
 			break;
 		case MENU_SEMIAUTO:
