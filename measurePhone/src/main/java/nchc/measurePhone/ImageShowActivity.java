@@ -2592,18 +2592,18 @@ public class ImageShowActivity extends Activity{
 				break;
 			}
 			//長度計算
-			double a = Math.sqrt((iv.crackstart_x-iv.crackmiddle_x)*(iv.crackstart_x-iv.crackmiddle_x) + (iv.crackstart_y-iv.crackmiddle_y)*(iv.crackstart_y-iv.crackmiddle_y));
-			double b = Math.sqrt((iv.crackmiddle_x-iv.crackend_x)*(iv.crackmiddle_x-iv.crackend_x) + (iv.crackmiddle_y-iv.crackend_y)*(iv.crackmiddle_y-iv.crackend_y));
-			double c = Math.sqrt((iv.crackstart_x-iv.crackend_x)*(iv.crackstart_x-iv.crackend_x) + (iv.crackstart_y-iv.crackend_y)*(iv.crackstart_y-iv.crackend_y));
-			double d = Math.acos((a*a+b*b-c*c)/(2*a*b)) * 180 / 3.1415;
+			iv.mLineLength1 = Math.sqrt((iv.crackstart_x-iv.crackmiddle_x)*(iv.crackstart_x-iv.crackmiddle_x) + (iv.crackstart_y-iv.crackmiddle_y)*(iv.crackstart_y-iv.crackmiddle_y));
+			iv.mLineLength2 = Math.sqrt((iv.crackmiddle_x-iv.crackend_x)*(iv.crackmiddle_x-iv.crackend_x) + (iv.crackmiddle_y-iv.crackend_y)*(iv.crackmiddle_y-iv.crackend_y));
+			iv.mLineLength3 = Math.sqrt((iv.crackstart_x-iv.crackend_x)*(iv.crackstart_x-iv.crackend_x) + (iv.crackstart_y-iv.crackend_y)*(iv.crackstart_y-iv.crackend_y));
+			iv.mLineDegree = Math.acos((iv.mLineLength1*iv.mLineLength1+iv.mLineLength2*iv.mLineLength2-iv.mLineLength3*iv.mLineLength3)/(2*iv.mLineLength1*iv.mLineLength2)) * 180 / 3.1415;
 
 			//長度計算
-			double length = Math.sqrt((iv.crackstart_x-iv.crackend_x)*(iv.crackstart_x-iv.crackend_x) + (iv.crackstart_y-iv.crackend_y)*(iv.crackstart_y-iv.crackend_y)); // the same with c
+			iv.mLineLengthScale = iv.mLineLength1 / mScale; // the same with c
 			//扣除掉微小震動 - 1pixel
 			//len_crack = len_crack -1;
 			//傳送長度
 			DecimalFormat df_ = new DecimalFormat("#.##");
-			String str_ = "寬度 = " +  df_.format(length / mScale) + "mm , 角度 = " +  df_.format(d)  ;
+			String str_ = "寬度 = " +  df_.format(iv.mLineLengthScale) + "mm , 角度 = " +  df_.format(iv.mLineDegree);
 			mLogText.setText(str_);
 
             iv.invalidate();

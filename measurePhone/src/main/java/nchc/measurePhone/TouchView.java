@@ -1,5 +1,6 @@
 package nchc.measurePhone;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -67,7 +68,13 @@ public class TouchView extends ImageView {
     public float crackend_y = 0;
 	public float mLastMotionX = 0f;
 	public float mLastMotionY = 0f;
-    
+
+	public double mLineLength1 = 0.0f;
+	public double mLineLength2 = 0.0f;
+	public double mLineLength3 = 0.0f;
+	public double mLineLengthScale = 0.0f;
+	public double mLineDegree = 0.0f;
+
     /*長按
 	private boolean mIsLongPressed = false;
 	private float mLastMotionX = 0f;
@@ -213,6 +220,7 @@ public class TouchView extends ImageView {
 			            	{
                                 switch (nWhichPoint) {
                                 case 0:
+                                	initLineLength();
                                     crackstart_x = (int)pts[0];
                                     crackstart_y = (int)pts[1];
 									crackmiddle_x = 0;
@@ -626,10 +634,10 @@ public class TouchView extends ImageView {
 		//設置畫筆
 		paint = new Paint();
 		paint.setStrokeWidth(3);//筆寬5圖元
-		paint.setStyle(Paint.Style.STROKE);//空心
 		paint.setColor(Color.GREEN);//設置為紅筆
 		paint.setAntiAlias(true);//鋸齒不顯示
-		paint.setPathEffect(new DashPathEffect(new float[] { 10,10 }, 0));
+		paint.setTextSize(50);
+
 		//座標轉換
 		Matrix mtrx = this.getImageMatrix();
 		float[] pts = new float[]{crackstart_x, crackstart_y, crackend_x, crackend_y};
@@ -639,7 +647,11 @@ public class TouchView extends ImageView {
 		if (crackend_x!=0 || crackend_y!=0)  //End點等於0時不畫
 			canvas.drawLine(dst[0], dst[1], dst[2], dst[3], paint);
 
-
+		//寫上數字
+		if (mLineLengthScale != 0){
+			DecimalFormat df = new DecimalFormat("#.##");
+			canvas.drawText(df.format(mLineLengthScale) + " mm", (dst[0]+dst[2])/2, (dst[1]+dst[3])/2, paint);
+		}
 	}
 	public void drawInterpPT(PointF left,PointF right, Canvas canvas) {
 		//設置畫筆
@@ -834,4 +846,10 @@ public class TouchView extends ImageView {
 		
 	}
 
+	public void initLineLength(){
+		mLineLength1 = 0.0f;
+		mLineLength2 = 0.0f;
+		mLineLength3 = 0.0f;
+		mLineLengthScale = 0.0f;
+	}
 }
