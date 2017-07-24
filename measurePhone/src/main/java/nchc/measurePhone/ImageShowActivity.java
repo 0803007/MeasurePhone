@@ -2598,7 +2598,7 @@ public class ImageShowActivity extends Activity{
 			iv.mLineDegree = Math.acos((iv.mLineLength1*iv.mLineLength1+iv.mLineLength2*iv.mLineLength2-iv.mLineLength3*iv.mLineLength3)/(2*iv.mLineLength1*iv.mLineLength2)) * 180 / 3.1415;
 
 			//長度計算
-			iv.mLineLengthScale = iv.mLineLength1 / mScale; // the same with c
+			iv.mLineLengthScale = iv.mLineLength3 / mScale; // the same with c
 			//扣除掉微小震動 - 1pixel
 			//len_crack = len_crack -1;
 			//傳送長度
@@ -2662,7 +2662,7 @@ public class ImageShowActivity extends Activity{
 			break;
 		case MENU_ABOUT:
 			//結束此程式
-			mLogText.setText("國家高速網路與計算中心............");
+			mLogText.setText("洽蕭宏達............");
 			break;
 		case MENU_EXIT:
 			//結束此程式
