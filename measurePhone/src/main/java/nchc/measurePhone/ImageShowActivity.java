@@ -113,7 +113,8 @@ public class ImageShowActivity extends Activity{
             MENU_GET_AB = Menu.FIRST + 10,
             MENU_GET_THRESH = Menu.FIRST + 11,
 	        MENU_DIVIDE_LINE = Menu.FIRST + 12,
-	        MENU_GET_A4_CORNER = Menu.FIRST + 13;
+	        MENU_GET_A4_CORNER = Menu.FIRST + 13,
+			MENU_MANU_SHIFT = Menu.FIRST + 14;
 
 	//主畫面
 	private TouchView iv;
@@ -311,6 +312,7 @@ public class ImageShowActivity extends Activity{
 	private float timestamp;
 	private static final float NS2S = 1.0f / 1000000000.0f;
 	private boolean bManualLaserPoint = false;
+	private boolean bManualShiftPoint = false;
 	private int nLaserPointIndex = 0;
 	private Uri uri;
 	private String ImagePath;
@@ -619,12 +621,28 @@ public class ImageShowActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList == null)
-					return;
+				if (bManualLaserPoint == true){
+					if (mLaserPointList == null)
+						return;
 
-				int i = (int) mLaserPointList.get(nLaserPointIndex).x;
-				int j = (int) mLaserPointList.get(nLaserPointIndex).y;
-				mLaserPointList.set(nLaserPointIndex, new PointF(i, j - 3));
+					int i = (int) mLaserPointList.get(nLaserPointIndex).x;
+					int j = (int) mLaserPointList.get(nLaserPointIndex).y;
+					mLaserPointList.set(nLaserPointIndex, new PointF(i, j - 3));
+				}
+
+				if (bManualShiftPoint == true){
+					switch (iv.nWhichPoint) {
+						case 1:
+							iv.crackstart_y = iv.crackstart_y - 3;
+							break;
+						case 2:
+							iv.crackmiddle_y = iv.crackmiddle_y - 3;
+							break;
+						case 0:
+							iv.crackend_y = iv.crackend_y - 3;
+							break;
+					}
+				}
 				iv.postInvalidate();
 			}
 		});
@@ -633,69 +651,134 @@ public class ImageShowActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList==null)
-					return;
+				if (bManualLaserPoint == true) {
+					if (mLaserPointList == null)
+						return;
 
-				int i = (int) mLaserPointList.get(nLaserPointIndex).x;
-	       		int j = (int) mLaserPointList.get(nLaserPointIndex).y;
-	       		mLaserPointList.set(nLaserPointIndex, new PointF(i,j+3));
-	       		iv.postInvalidate();
+					int i = (int) mLaserPointList.get(nLaserPointIndex).x;
+					int j = (int) mLaserPointList.get(nLaserPointIndex).y;
+					mLaserPointList.set(nLaserPointIndex, new PointF(i, j + 3));
+				}
+
+				if (bManualShiftPoint == true){
+					switch (iv.nWhichPoint) {
+						case 1:
+							iv.crackstart_y = iv.crackstart_y + 3;
+							break;
+						case 2:
+							iv.crackmiddle_y = iv.crackmiddle_y + 3;
+							break;
+						case 0:
+							iv.crackend_y = iv.crackend_y + 3;
+							break;
+					}
+				}
+				iv.postInvalidate();
 			}});
 		mRightButton.setOnClickListener(new Button.OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList==null)
-					return;
+				if (bManualLaserPoint == true) {
+					if (mLaserPointList == null)
+						return;
 
-				int i = (int) mLaserPointList.get(nLaserPointIndex).x;
-	       		int j = (int) mLaserPointList.get(nLaserPointIndex).y;
-	       		mLaserPointList.set(nLaserPointIndex, new PointF(i+3,j));
-	       		iv.postInvalidate();
+					int i = (int) mLaserPointList.get(nLaserPointIndex).x;
+					int j = (int) mLaserPointList.get(nLaserPointIndex).y;
+					mLaserPointList.set(nLaserPointIndex, new PointF(i + 3, j));
+				}
+
+				if (bManualShiftPoint == true){
+					switch (iv.nWhichPoint) {
+						case 1:
+							iv.crackstart_x = iv.crackstart_x + 3;
+							break;
+						case 2:
+							iv.crackmiddle_x = iv.crackmiddle_x + 3;
+							break;
+						case 0:
+							iv.crackend_x = iv.crackend_x + 3;
+							break;
+					}
+				}
+				iv.postInvalidate();
 			}});
 		mLeftButton.setOnClickListener(new Button.OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList==null)
-					return;
+				if (bManualLaserPoint == true) {
+					if (mLaserPointList == null)
+						return;
 
-				int i = (int) mLaserPointList.get(nLaserPointIndex).x;
-	       		int j = (int) mLaserPointList.get(nLaserPointIndex).y;
-	       		mLaserPointList.set(nLaserPointIndex, new PointF(i-3,j));
-	       		iv.invalidate();
+					int i = (int) mLaserPointList.get(nLaserPointIndex).x;
+					int j = (int) mLaserPointList.get(nLaserPointIndex).y;
+					mLaserPointList.set(nLaserPointIndex, new PointF(i - 3, j));
+				}
+
+				if (bManualShiftPoint == true){
+					switch (iv.nWhichPoint) {
+						case 1:
+							iv.crackstart_x = iv.crackstart_x - 3;
+							break;
+						case 2:
+							iv.crackmiddle_x = iv.crackmiddle_x - 3;
+							break;
+						case 0:
+							iv.crackend_x = iv.crackend_x - 3;
+							break;
+					}
+				}
+				iv.postInvalidate();
 			}});
 		mSaveButton.setOnClickListener(new Button.OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList==null)
-					return;
+				if (bManualLaserPoint == true) {
+					if (mLaserPointList == null)
+						return;
 
-				//得到DLT參數
-		        getDLTParameter();
-				//寫入紅點雷射影像位置
-				saveLaserImagePos(mLaserPointList);
-                //Auto detect mScale mShiftX mShiftY
-				setDLTAutoScale();
+					//得到DLT參數
+					getDLTParameter();
+					//寫入紅點雷射影像位置
+					saveLaserImagePos(mLaserPointList);
+					//Auto detect mScale mShiftX mShiftY
+					setDLTAutoScale();
+				}
 			}});
 		mCenterButton.setOnClickListener(new Button.OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mLaserPointList==null)
-					return;
+				if (bManualLaserPoint == true) {
+					if (mLaserPointList == null)
+						return;
 
-				nLaserPointIndex = nLaserPointIndex + 1;
-				if (nLaserPointIndex==4)
-					nLaserPointIndex = 0;
+					nLaserPointIndex = nLaserPointIndex + 1;
+					if (nLaserPointIndex == 4)
+						nLaserPointIndex = 0;
 
-				iv.nLaserPointIndex = nLaserPointIndex;
-				mCenterButton.setText(Integer.toString(nLaserPointIndex + 1));
+					iv.nLaserPointIndex = nLaserPointIndex;
+					switch (nLaserPointIndex) {
+						case 0:
+							mCenterButton.setText("A");
+							break;
+						case 1:
+							mCenterButton.setText("B");
+							break;
+						case 2:
+							mCenterButton.setText("C");
+							break;
+						case 3:
+							mCenterButton.setText("D");
+							break;
+					}
+				}
 			}});
 		mSetAngleButton.setOnClickListener(new Button.OnClickListener(){
 
@@ -2362,6 +2445,7 @@ public class ImageShowActivity extends Activity{
 		menu.add(0, MENU_GET_DLTIMG, 0, "進行影像校正");
 		//menu.add(,MENU_DIVIDE_LINE, 0, "--------------------------");
 		//menu.add(0, MENU_SEMIAUTO, 0, "量測裂縫資料");
+		menu.add(0, MENU_MANU_SHIFT, 0, "手動微調量測點");
 		menu.add(0, MENU_PROFILE, 0, "量測資訊");
 
 		//menu.add(0, MENU_OPENCLOSE_SENSOR, 0, "Open/Close Sensor");
@@ -2532,6 +2616,10 @@ public class ImageShowActivity extends Activity{
 			iv.invalidate();
 			break;
 		case MENU_MANU_LASER:
+			if (bManualShiftPoint == true){
+				Toast.makeText(this, "請先關閉手動微調量測點!!!!", Toast.LENGTH_SHORT).show();
+				break;
+			}
 			if (bManualLaserPoint == false)
 			{
 				//建立新的4點(0,0)的array
@@ -2659,6 +2747,38 @@ public class ImageShowActivity extends Activity{
 				iv.isGridMode = true;
 
 			iv.invalidate();
+			break;
+		case MENU_MANU_SHIFT:
+			if (bManualLaserPoint == true){
+				Toast.makeText(this, "請先關閉手動雷射模式!!!!", Toast.LENGTH_SHORT).show();
+				break;
+			}
+
+			if (bManualShiftPoint == false)
+			{
+				mTopButton.setVisibility(View.VISIBLE);
+				mDownButton.setVisibility(View.VISIBLE);
+				mRightButton.setVisibility(View.VISIBLE);
+				mLeftButton.setVisibility(View.VISIBLE);
+				mSaveButton.setVisibility(View.INVISIBLE);
+				mCenterButton.setVisibility(View.INVISIBLE);
+
+				bManualShiftPoint = true;
+			}else
+			{
+				mTopButton.setVisibility(View.GONE);
+				mDownButton.setVisibility(View.GONE);
+				mRightButton.setVisibility(View.GONE);
+				mLeftButton.setVisibility(View.GONE);
+				mSaveButton.setVisibility(View.GONE);
+				mCenterButton.setVisibility(View.GONE);
+
+				bManualShiftPoint = false;
+			}
+			//更新畫面
+			iv.isDLTMode = false;
+			iv.postInvalidate();
+
 			break;
 		case MENU_ABOUT:
 			//結束此程式

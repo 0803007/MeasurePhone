@@ -84,7 +84,7 @@ public class TouchView extends ImageView {
     boolean isLongClickModule = false;
     boolean isTouchOne = false;
 	boolean isStartPoint = false;
-    int nWhichPoint = 0;
+	public int nWhichPoint = 0;
     
     //µõÁ_ªºµ²ªG
 	public PointF mInterpPTLeft = new PointF(0.0f,0.0f);
