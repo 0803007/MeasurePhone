@@ -46,7 +46,6 @@ public class DoLengthWork extends Thread {
 
                     @Override
                     public void run() {
-                        // TODO �۰ʲ��ͪ���k Stub
                         mProBar.setSecondaryProgress(100);
                     }
                 });
