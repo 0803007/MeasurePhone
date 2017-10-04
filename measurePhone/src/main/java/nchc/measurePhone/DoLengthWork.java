@@ -11,7 +11,6 @@ public class DoLengthWork extends Thread {
 
     @Override
     public void run() {
-        // TODO �۰ʲ��ͪ���k Stub
         Calendar begin = Calendar.getInstance();
         do {
             Calendar now = Calendar.getInstance();
@@ -21,7 +20,6 @@ public class DoLengthWork extends Thread {
 
                     @Override
                     public void run() {
-                        // TODO �۰ʲ��ͪ���k Stub
                         mProBar.setProgress(100);
                     }
                 });
@@ -31,7 +29,6 @@ public class DoLengthWork extends Thread {
 
                 @Override
                 public void run() {
-                    // TODO �۰ʲ��ͪ���k Stub
                     mProBar.setProgress(iDiffSec * 2);
                 }
             });
@@ -40,7 +37,6 @@ public class DoLengthWork extends Thread {
 
                     @Override
                     public void run() {
-                        // TODO �۰ʲ��ͪ���k Stub
                         mProBar.setSecondaryProgress(iDiffSec * 4);
 
                     }
